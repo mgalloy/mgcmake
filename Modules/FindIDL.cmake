@@ -11,6 +11,7 @@
 #   Idl_DLL_EXT         = extension for DLM shared objects, i.e., so, dll
 #   Idl_INCLUDE_DIR     = IDL include directory
 #   Idl_LIBRARY         = IDL shared library location
+#   Idl_EXECUTABLE      = IDL command
 
 # convenience variable for ITT's install dir, should be fixed to use
 # Program Files env var but it is problematic in cygwin
@@ -20,18 +21,21 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
   set(_Idl_OS "")
   set(Idl_DLL_EXT "dll")
   set(_Idl_KNOWN_COMPANIES "Exelis" "ITT")
+  set(_Idl_EXECUTABLE_EXT ".exe")
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
   set(_Idl_PROGRAM_FILES_DIR "/Applications")
   set(_Idl_NAME "idl")
   set(_Idl_OS "darwin.")
   set(Idl_DLL_EXT "so")
   set(_Idl_KNOWN_COMPANIES "exelis" "itt")
+  set(_Idl_EXECUTABLE_EXT "")
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   set(_Idl_PROGRAM_FILES_DIR "/usr/local")
   set(_Idl_NAME "idl")
   set(_Idl_OS "linux.")
   set(Idl_DLL_EXT "so")
   set(_Idl_KNOWN_COMPANIES "exelis" "itt")
+  set(_Idl_EXECUTABLE_EXT "")
 endif ()
 
 # find idl based on version numbers, if you want a specific one, set
@@ -90,6 +94,7 @@ if (IDL_FOUND)
   # find the version
   get_filename_component(Idl_ROOT "${Idl_INCLUDE_DIR}/../.." ABSOLUTE)
   set(_Idl_VERSION_FILENAME "${Idl_ROOT}/version.txt")
+  set(Idl_EXECUTABLE "${Idl_ROOT/bin/bin.${Idl_PLATFORM_EXT}/idl}${_Idl_EXECUTABLE_EXT}")
 
   if (EXISTS "${_Idl_VERSION_FILENAME}")
     file(READ "${_Idl_VERSION_FILENAME}" _Idl_VERSION)
