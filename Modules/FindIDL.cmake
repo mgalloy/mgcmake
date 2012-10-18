@@ -100,7 +100,7 @@ if (IDL_FOUND)
     string(STRIP "${_Idl_VERSION}" Idl_VERSION)
   endif ()
 
-  set(Idl_EXECUTABLE "${Idl_ROOT}/bin/bin.${Idl_PLATFORM_EXT}/idl${_Idl_EXECUTABLE_EXT}")
+  set(Idl_EXECUTABLE "${Idl_ROOT}/bin/idl${_Idl_EXECUTABLE_EXT}")
 
   if (NOT Idl_FIND_QUIETLY)
     if (DEFINED Idl_VERSION)
