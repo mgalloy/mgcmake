@@ -94,12 +94,13 @@ if (IDL_FOUND)
   # find the version
   get_filename_component(Idl_ROOT "${Idl_INCLUDE_DIR}/../.." ABSOLUTE)
   set(_Idl_VERSION_FILENAME "${Idl_ROOT}/version.txt")
-  set(Idl_EXECUTABLE "${Idl_ROOT/bin/bin.${Idl_PLATFORM_EXT}/idl}${_Idl_EXECUTABLE_EXT}")
 
   if (EXISTS "${_Idl_VERSION_FILENAME}")
     file(READ "${_Idl_VERSION_FILENAME}" _Idl_VERSION)
     string(STRIP "${_Idl_VERSION}" Idl_VERSION)
   endif ()
+
+  set(Idl_EXECUTABLE "${Idl_ROOT}/bin/bin.${Idl_PLATFORM_EXT}/idl${_Idl_EXECUTABLE_EXT}")
 
   if (NOT Idl_FIND_QUIETLY)
     if (DEFINED Idl_VERSION)
