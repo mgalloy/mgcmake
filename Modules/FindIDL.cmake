@@ -11,6 +11,7 @@
 #   Idl_DLL_EXT         = extension for DLM shared objects, i.e., so, dll
 #   Idl_INCLUDE_DIR     = IDL include directory
 #   Idl_LIBRARY         = IDL shared library location
+#   Idl_LIBRARY_PATH    = IDL shared library directory
 #   Idl_EXECUTABLE      = IDL command
 
 # convenience variable for ITT's install dir, should be fixed to use
@@ -45,10 +46,10 @@ if (NOT DEFINED Idl_FIND_VERSION)
 # IDL 8.0 is in a different location than other versions on Windows (extra IDL directory in path)
   foreach (_Idl_COMPANY ${_Idl_KNOWN_COMPANIES})
     list(APPEND 
-         _Idl_SEARCH_DIRS 
+         _Idl_SEARCH_DIRS
          "${_Idl_PROGRAM_FILES_DIR}/${_Idl_COMPANY}/${_Idl_NAME}/${_Idl_NAME}80")
     list(APPEND 
-         _Idl_SEARCH_DIRS 
+         _Idl_SEARCH_DIRS
          "${_Idl_PROGRAM_FILES_DIR}/${_Idl_COMPANY}/${_Idl_NAME}/${_Idl_NAME}81")
     foreach (_Idl_KNOWN_VERSION ${_Idl_KNOWN_VERSIONS})
       list(APPEND _Idl_SEARCH_DIRS
@@ -93,6 +94,8 @@ endif ()
 if (IDL_FOUND)
   # find the version
   get_filename_component(Idl_ROOT "${Idl_INCLUDE_DIR}/../.." ABSOLUTE)
+  get_filename_component(Idl_LIBRARY_PATH "${Idl_LIBRARY}" PATH)
+  
   set(_Idl_VERSION_FILENAME "${Idl_ROOT}/version.txt")
 
   if (EXISTS "${_Idl_VERSION_FILENAME}")
