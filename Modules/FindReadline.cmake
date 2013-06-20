@@ -32,6 +32,8 @@ if (Readline_FOUND)
            "${Readline_MINOR_VERSION}")
 
     set(Readline_VERSION "${Readline_MAJOR_VERSION}.${Readline_MINOR_VERSION}")
+  else ()
+    message(FATAL_ERROR "${Readline_INCLUDE_DIR}/readline/readline.h not found")
   endif ()
 
   if (Readline_FIND_VERSION VERSION_GREATER Readline_VERSION)
