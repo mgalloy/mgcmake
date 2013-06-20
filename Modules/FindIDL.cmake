@@ -13,6 +13,7 @@
 #   Idl_LIBRARY         = IDL shared library location
 #   Idl_LIBRARY_PATH    = IDL shared library directory
 #   Idl_EXECUTABLE      = IDL command
+#   Idl_PATH_SEP        = character to separate IDL paths
 
 # convenience variable for ITT's install dir, should be fixed to use
 # Program Files env var but it is problematic in cygwin
@@ -23,6 +24,18 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
   set(Idl_DLL_EXT "dll")
   set(_Idl_KNOWN_COMPANIES "Exelis" "ITT")
   set(_Idl_EXECUTABLE_EXT ".exe")
+  set(Idl_PATH_SEP ";")
+elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "CYGWIN")
+  set(_Idl_PROGRAM_FILES_DIR "/cygdrive/c/Program Files")
+  set(_Idl_NAME "IDL")
+  set(_Idl_OS "")
+  set(_Idl_KNOWN_COMPANIES "Exelis" "ITT")
+  set(_Idl_EXECUTABLE_EXT ".exe")
+  set(Idl_PATH_SEP ";")
+
+  # Cygwin assumes Linux conventions, but IDL is a Windows application
+  set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib")
+  set(CMAKE_FIND_LIBRARY_PREFIXES "")
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
   set(_Idl_PROGRAM_FILES_DIR "/Applications")
   set(_Idl_NAME "idl")
@@ -30,6 +43,7 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
   set(Idl_DLL_EXT "so")
   set(_Idl_KNOWN_COMPANIES "exelis" "itt")
   set(_Idl_EXECUTABLE_EXT "")
+  set(Idl_PATH_SEP ":")
 elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   set(_Idl_PROGRAM_FILES_DIR "/usr/local")
   set(_Idl_NAME "idl")
@@ -37,9 +51,10 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   set(Idl_DLL_EXT "so")
   set(_Idl_KNOWN_COMPANIES "exelis" "itt")
   set(_Idl_EXECUTABLE_EXT "")
+  set(Idl_PATH_SEP ":")
 endif ()
 
-# find idl based on version numbers, if you want a specific one, set
+# find IDL based on version numbers, if you want a specific one, set
 # it prior to running configure
 if (NOT DEFINED Idl_FIND_VERSION)
   set(_Idl_KNOWN_VERSIONS "82" "81" "80" "71" "706")
@@ -95,7 +110,7 @@ if (IDL_FOUND)
   # find the version
   get_filename_component(Idl_ROOT "${Idl_INCLUDE_DIR}/../.." ABSOLUTE)
   get_filename_component(Idl_LIBRARY_PATH "${Idl_LIBRARY}" PATH)
-  
+
   set(_Idl_VERSION_FILENAME "${Idl_ROOT}/version.txt")
 
   if (EXISTS "${_Idl_VERSION_FILENAME}")
@@ -103,7 +118,7 @@ if (IDL_FOUND)
     string(STRIP "${_Idl_VERSION}" Idl_VERSION)
   endif ()
 
-  if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+  if (WIN32 OR CYGWIN)
     set(Idl_EXECUTABLE "${Idl_ROOT}/bin/bin.${Idl_BIN_EXT}/idl${_Idl_EXECUTABLE_EXT}")
   else ()
     set(Idl_EXECUTABLE "${Idl_ROOT}/bin/idl${_Idl_EXECUTABLE_EXT}")
@@ -119,7 +134,7 @@ if (IDL_FOUND)
   set(HAVE_IDL 1 CACHE BOOL "Whether have IDL")
 else ()
    if (Idl_FIND_REQUIRED)
-      message(FATAL_ERROR "Did not find IDL. Use -DIdl_INCLUDE_DIR and -DIdl_LIBRARY to specify IDL location.")
+      message(FATAL_ERROR "Did not find IDL. Use -DIDL_ROOT or -DIdl_INCLUDE_DIR / -DIdl_LIBRARY to specify IDL location.")
    endif ()
 endif ()
 

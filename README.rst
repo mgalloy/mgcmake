@@ -1,4 +1,4 @@
 mgcmake
 =======
 
-CMake module and helper functions for IDL development.
+CMake module and helper functions useful for IDL development.
