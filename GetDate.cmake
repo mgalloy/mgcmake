@@ -1,3 +1,6 @@
+# needed for TIMESTAMP sub-command for STRING
+cmake_minimum_required(VERSION 2.8.11)
+
 macro(TODAY RESULT)
   string(TIMESTAMP M "%m")
   string(TIMESTAMP D "%d")
