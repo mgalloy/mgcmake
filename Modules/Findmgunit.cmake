@@ -2,7 +2,8 @@ include(FindPackageHandleStandardArgs)
 
 find_path(mgunit_DIR
   mgunit.pro
-  PATHS "~/software;~/projects"
+  PATHS ~/software/mgunit ~/projects/mgunit
+  PATH_SUFFIXES src lib
 )
 
 if (mgunit_DIR)

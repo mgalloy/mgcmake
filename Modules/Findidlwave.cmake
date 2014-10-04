@@ -2,7 +2,7 @@ include(FindPackageHandleStandardArgs)
 
 find_path(idlwave_DIR
   idlwave.el
-  PATHS "~/software;~/projects"
+  PATHS ~/software/idlwave ~/projects/idlwave
 )
 
 if (idlwave_DIR)
