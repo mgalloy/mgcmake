@@ -27,7 +27,7 @@ if (MYSQL_INCLUDE_DIR AND MYSQL_LIBRARY)
   set(MYSQL_LIBRARIES ${MYSQL_LIBRARY} )
 else ()
   set(MYSQL_FOUND FALSE)
-  set( MYSQL_LIBRARIES )
+  set(MYSQL_LIBRARIES)
 endif ()
 
 if (MYSQL_FOUND)
@@ -46,4 +46,4 @@ endif ()
 mark_as_advanced(
   MYSQL_LIBRARY
   MYSQL_INCLUDE_DIR
-  )
+)
