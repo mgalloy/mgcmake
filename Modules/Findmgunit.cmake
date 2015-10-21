@@ -8,7 +8,7 @@ find_path(mgunit_DIR
 
 if (mgunit_DIR)
   set(mgunit_FOUND TRUE)
-endif()
+endif ()
 
 if (mgunit_FOUND)
   if (NOT mgunit_FIND_QUIETLY)
