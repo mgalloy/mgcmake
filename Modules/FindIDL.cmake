@@ -1,9 +1,9 @@
-# Copyright (c) 2012-2013, Michael Galloy <mgalloy@gmail.com>
+# Copyright (c) 2012-2015, Michael Galloy <mgalloy@gmail.com>
 # Copyright (c) 2013, Lars Baehren <lbaehren@gmail.com>
 # All rights reserved.
 #
-# Redistribution and use in source and binary forms, with or without modification,
-# are permitted provided that the following conditions are met:
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
 #
 #  * Redistributions of source code must retain the above copyright notice, this
 #    list of conditions and the following disclaimer.
@@ -31,7 +31,8 @@
 #
 # This module will define the following variables:
 #   IDL_FOUND           = whether IDL was found
-#   IDL_PLATFORM_EXT    = DLM extension, i.e., darwin.x86_64, linux.x86, x86_64...
+#   IDL_LICENSED        = whether IDL was licensed to run
+#   IDL_PLATFORM_EXT    = DLM extension, i.e., darwin.x86_64, linux.x86, etc.
 #   IDL_DLL_EXT         = extension for DLM shared objects, i.e., so, dll
 #   IDL_INCLUDE_DIR     = IDL include directory
 #   IDL_LIBRARY         = IDL shared library location
@@ -178,14 +179,31 @@ if (NOT IDL_FOUND)
     get_filename_component(IDL_ROOT_DIR "${IDL_INCLUDE_DIR}/../.." ABSOLUTE)
     get_filename_component(IDL_LIBRARY_PATH "${IDL_LIBRARY}" PATH)
 
+    # determine if IDL is licensed
+    execute_process(
+      COMMAND idl -quiet -IDL_QUIET 1 -e "print, lmgr(/demo)"
+      OUTPUT_VARIABLE LMGR_OUTPUT
+      ERROR_VARIABLE LMGR_ERROR
+    )
+    string(STRIP "${LMGR_OUTPUT}" LMGR_OUTPUT)
+    if (LMGR_OUTPUT)
+      set(IDL_LICENSED FALSE)
+    else ()
+      set(IDL_LICENSED TRUE)
+    endif ()
+    #string(COMPARE EQUAL "${LMGR_OUTPUT}" "0" IDL_LICENSED)
+
     if (NOT IDL_FIND_QUIETLY)
       message(STATUS "Found components for IDL")
       message(STATUS "IDL_VERSION     = ${IDL_VERSION}")
       message(STATUS "IDL_EXECUTABLE  = ${IDL_EXECUTABLE}")
       message(STATUS "IDL_INCLUDE_DIR = ${IDL_INCLUDE_DIR}")
       message(STATUS "IDL_LIBRARY     = ${IDL_LIBRARY}")
+      message(STATUS "IDL_LICENSED    = ${IDL_LICENSED}")
     endif ()
   else ()
+    set(IDL_LICENSED FALSE)
+
     if (IDL_FIND_REQUIRED)
       message(FATAL_ERROR "Could not find IDL!")
     endif ()
