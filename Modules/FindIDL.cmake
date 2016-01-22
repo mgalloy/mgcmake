@@ -163,7 +163,7 @@ if (NOT IDL_FOUND)
       list(GET IDL_VERSION 2 IDL_VERSION_SUB)
       set(IDL_VERSION "${IDL_VERSION_MAJOR}.${IDL_VERSION_MINOR}.${IDL_VERSION_SUB}")
   else ()
-      find_file(IdL_VERSION_TXT version.txt
+      find_file(IDL_VERSION_TXT version.txt
         HINTS ${IDL_ROOT_DIR}
         )
       if (IDL_VERSION_TXT)
