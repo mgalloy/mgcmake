@@ -95,10 +95,10 @@ if (NOT IDL_FOUND)
     # IDL 8.0 is in a different location than other versions on Windows (extra
     # IDL directory in path)
     foreach (_IDL_COMPANY ${_IDL_KNOWN_COMPANIES})
-      list(APPEND 
+      list(APPEND
            _IDL_SEARCH_DIRS
            "${_IDL_PROGRAM_FILES_DIR}/${_IDL_COMPANY}/${_IDL_NAME}/${_IDL_NAME}80")
-      list(APPEND 
+      list(APPEND
            _IDL_SEARCH_DIRS
            "${_IDL_PROGRAM_FILES_DIR}/${_IDL_COMPANY}/${_IDL_NAME}/${_IDL_NAME}81")
       foreach (_IDL_KNOWN_VERSION ${_IDL_KNOWN_VERSIONS})
@@ -181,7 +181,7 @@ if (NOT IDL_FOUND)
 
     # determine if IDL is licensed
     execute_process(
-      COMMAND idl -quiet -IDL_QUIET 1 -e "print, lmgr(/demo)"
+      COMMAND ${IDL_EXECUTABLE} -IDL_STARTUP "" -quiet -IDL_QUIET 1 -e "print, lmgr(/demo)"
       OUTPUT_VARIABLE LMGR_OUTPUT
       ERROR_VARIABLE LMGR_ERROR
     )
@@ -191,7 +191,6 @@ if (NOT IDL_FOUND)
     else ()
       set(IDL_LICENSED TRUE)
     endif ()
-    #string(COMPARE EQUAL "${LMGR_OUTPUT}" "0" IDL_LICENSED)
 
     if (NOT IDL_FIND_QUIETLY)
       message(STATUS "Found components for IDL")
